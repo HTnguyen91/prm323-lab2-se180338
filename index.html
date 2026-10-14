@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semester — Student Course Planner</title>
+    <!-- Google Fonts: Be Vietnam Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/device.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+    <link rel="stylesheet" href="/src/styles/screens.css" />
+  </head>
+  <body>
+    <!-- Top Bar / Presentation Bar -->
+    <header id="presentation-dock" class="presentation-dock">
+      <div class="dock-brand">
+        <div class="brand-badge">PRM323 Lab 2</div>
+        <div class="brand-title"><strong>Semester</strong> — Student Course Planner</div>
+      </div>
+
+      <!-- Quick Flow Launcher (Rubric requirement) -->
+      <div class="dock-flows">
+        <span class="dock-label">🚀 Demo User Flows:</span>
+        <button class="flow-pill-btn active" data-flow="f1" id="btn-flow-f1" title="Flow 1: Khai báo giờ bận cá nhân">
+          <span class="flow-num">F1</span> Giờ bận
+        </button>
+        <button class="flow-pill-btn" data-flow="f2" id="btn-flow-f2" title="Flow 2: Tìm môn và chọn lớp phù hợp">
+          <span class="flow-num">F2</span> Chọn môn
+        </button>
+        <button class="flow-pill-btn" data-flow="f3a" id="btn-flow-f3a" title="Flow 3A: Đăng ký thành công 5 môn">
+          <span class="flow-num">F3A</span> Đăng ký 5 môn
+        </button>
+        <button class="flow-pill-btn" data-flow="f3b" id="btn-flow-f3b" title="Flow 3B: Phục hồi khi hết chỗ (Recovery)">
+          <span class="flow-num">F3B</span> Hết chỗ & Phục hồi
+        </button>
+        <button class="flow-pill-btn" data-flow="net_err" id="btn-flow-net" title="Flow lỗi mạng mô phỏng">
+          <span class="flow-num">⚡</span> Mất mạng
+        </button>
+        <button class="flow-pill-btn" data-flow="conflict" id="btn-flow-conflict" title="Flow cảnh báo trùng giờ">
+          <span class="flow-num">⚠️</span> Trùng giờ
+        </button>
+      </div>
+
+      <!-- Viewport & Screen Selector -->
+      <div class="dock-controls">
+        <select id="quick-screen-select" class="screen-selector" title="Chuyển nhanh đến màn hình">
+          <option value="">-- Chuyển nhanh màn hình --</option>
+          <option value="S01">S01 · Đăng nhập</option>
+          <option value="S02">S02 · Lịch tuần</option>
+          <option value="S03">S03 · Tìm môn</option>
+          <option value="S04">S04 · Chi tiết môn & chọn lớp</option>
+          <option value="S05">S05 · Kế hoạch học kỳ</option>
+          <option value="S06">S06 · Xem lại & gửi đăng ký</option>
+          <option value="S07">S07 · Kết quả đăng ký</option>
+          <option value="S08">S08 · Cá nhân (Profile)</option>
+          <option value="S09">S09 · Giờ bận cá nhân</option>
+          <option value="S10">S10 · Thêm / Sửa giờ bận</option>
+        </select>
+
+        <button id="btn-toggle-info" class="dock-icon-btn" title="Xem thông tin đề tài & Rubric">
+          📋 Thông tin đề bài
+        </button>
+
+        <div class="viewport-switcher">
+          <button class="vp-btn active" data-vp="360" title="Kích thước chuẩn 360x800 dp">360 dp</button>
+          <button class="vp-btn" data-vp="412" title="Kích thước rộng 412x800 dp">412 dp</button>
+          <button class="vp-btn" data-vp="fluid" title="Xem toàn màn hình">Fluid</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="workspace-area">
+      <!-- Phone Mockup Container -->
+      <div id="phone-container" class="phone-container vp-360">
+        <!-- Physical Device Frame -->
+        <div class="phone-bezel">
+          <!-- Dynamic Android Status Bar -->
+          <div class="phone-status-bar">
+            <span class="status-time" id="status-clock">07:30</span>
+            <div class="status-notch">
+              <span class="camera-lens"></span>
+            </div>
+            <div class="status-icons">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9zm0 13.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5z"/>
+              </svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.5c3.27 0 6.27 1.25 8.54 3.31L12 19.34 3.46 10.81C5.73 8.75 8.73 7.5 12 7.5z"/>
+              </svg>
+              <svg width="16" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 4h-2V2h-4v2H8c-.55 0-1 .45-1 1v16c0 .55.45 1 1 1h8c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-1 10h-2v4h-2v-4H9l3-4 3 4z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Screen Viewport Root (In-App) -->
+          <div id="app-viewport" class="app-viewport">
+            <!-- Active Screen Container -->
+            <div id="screen-root" class="screen-root">
+              <!-- Dynamically injected screens (S01-S10) -->
+            </div>
+
+            <!-- Global Dialog Container (D1-D6) -->
+            <div id="dialog-overlay" class="dialog-backdrop hidden" aria-hidden="true">
+              <div id="dialog-content" class="dialog-surface" role="dialog" aria-modal="true">
+                <!-- Injected dialog content -->
+              </div>
+            </div>
+
+            <!-- Global Snackbar / Toast with Undo -->
+            <div id="global-snackbar" class="global-snackbar hidden" role="status" aria-live="polite">
+              <span id="snackbar-text" class="snackbar-text"></span>
+              <button id="snackbar-action" class="snackbar-action hidden">Hoàn tác</button>
+            </div>
+
+            <!-- Global Navigation Bar (Only on S02, S03, S05, S08) -->
+            <nav id="bottom-nav" class="bottom-nav hidden" aria-label="Điều hướng chính">
+              <button class="nav-item" data-screen="S02" id="nav-s02">
+                <div class="nav-indicator">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </div>
+                <span class="nav-label">Lịch</span>
+              </button>
+              <button class="nav-item" data-screen="S03" id="nav-s03">
+                <div class="nav-indicator">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </div>
+                <span class="nav-label">Tìm môn</span>
+              </button>
+              <button class="nav-item" data-screen="S05" id="nav-s05">
+                <div class="nav-indicator">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                </div>
+                <span class="nav-label">Kế hoạch</span>
+                <span id="plan-badge-count" class="nav-badge hidden">5</span>
+              </button>
+              <button class="nav-item" data-screen="S08" id="nav-s08">
+                <div class="nav-indicator">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <span class="nav-label">Cá nhân</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- Phone Home Indicator Bar -->
+          <div class="phone-home-indicator"></div>
+        </div>
+      </div>
+
+      <!-- Right Side Inspector / Information Panel -->
+      <aside id="info-drawer" class="info-drawer">
+        <div class="drawer-header">
+          <h3>📌 Đối chiếu Đề bài & Rubric Lab 2</h3>
+          <button id="btn-close-drawer" class="drawer-close-btn">&times;</button>
+        </div>
+
+        <div class="drawer-body">
+          <!-- Persona Card -->
+          <div class="spec-card">
+            <div class="spec-card-title">👤 Persona sinh viên</div>
+            <p><strong>Họ và tên:</strong> Trần Gia Hân (20 tuổi)</p>
+            <p><strong>Ngành:</strong> Kỹ thuật phần mềm · <strong>Kỳ:</strong> 4</p>
+            <p><strong>MSSV:</strong> SE180123 · <strong>Học kỳ:</strong> Xuân 2027</p>
+            <p><strong>Tiến độ:</strong> 54/145 tín chỉ (37.2%)</p>
+            <p><strong>Mục tiêu:</strong> Lập kế hoạch 5 môn (15 tín chỉ), không trùng giờ làm ca tối/sáng, phục hồi ngay khi hết chỗ.</p>
+          </div>
+
+          <!-- Requirements Checklist -->
+          <div class="spec-card">
+            <div class="spec-card-title">✅ Kiểm tra yêu cầu đề bài</div>
+            <ul class="checklist">
+              <li class="checked"><strong>≥ 8 màn hình riêng biệt:</strong> Có đủ 10 màn (S01–S10), dialog không tính là màn.</li>
+              <li class="checked"><strong>≥ 3 user flow hoàn chỉnh:</strong> F1 (Giờ bận), F2 (Chọn môn/lớp), F3A & F3B (Đăng ký & Phục hồi).</li>
+              <li class="checked"><strong>Nhánh lỗi & phục hồi:</strong> Nhập sai form (S10), mất kết nối (S06.error), lớp hết chỗ (S07.partial -> S04.alt), hoàn tác (Undo).</li>
+              <li class="checked"><strong>Front-end tương tác:</strong> Chạy mô phỏng không cần backend hay database thật.</li>
+              <li class="checked"><strong>Design System M3:</strong> Màu sắc chuẩn, Be Vietnam Pro, touch target ≥ 48dp, contrast ≥ 4.5:1.</li>
+            </ul>
+          </div>
+
+          <!-- User Flow Guide -->
+          <div class="spec-card">
+            <div class="spec-card-title">🗺️ Hướng dẫn 3 Flow kiểm thử</div>
+            <div class="flow-guide-step">
+              <strong>Flow 1: Khai báo giờ bận</strong>
+              <p>S01 → Đăng nhập → S02 → Thêm giờ bận S09 → Tạo mới B01 (Highlands ca tối) và B02 (ca sáng CN) tại S10.</p>
+            </div>
+            <div class="flow-guide-step">
+              <strong>Flow 2: Tìm môn & Chọn lớp</strong>
+              <p>S03 (Tìm DBI202 hoặc bấm chip) → S04 Chi tiết môn → Chọn SE1801 (12/35 chỗ) → Thêm vào Kế hoạch S05 (có Undo).</p>
+            </div>
+            <div class="flow-guide-step">
+              <strong>Flow 3A: Đăng ký thành công 5 môn</strong>
+              <p>S05 (Đủ 5 môn/15 tín chỉ) → S06 Xem lại → Dialog D2 Gửi → S07 Đăng ký thành công → S02 Lịch tuần.</p>
+            </div>
+            <div class="flow-guide-step">
+              <strong>Flow 3B: Phục hồi khi lớp hết chỗ</strong>
+              <p>S06 Gửi → S07.partial: DBI202 bị full chỗ! → Bấm "Chọn lớp thay thế cho DBI202" → S04.alt chọn SE1804 → Đăng ký 1 lớp → S07.replacement thành công!</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
